@@ -36,7 +36,8 @@ public class PostObserver : IObserver<Post>
         {
             if (value.CreatedUTC < _observationStartTime)
                 return;
-
+            
+            _logger.LogInfo("Saving Post {Id}", value.Id);
             var redditPost = _postMapper.Map(value);
             await redditPost.Save();
         }

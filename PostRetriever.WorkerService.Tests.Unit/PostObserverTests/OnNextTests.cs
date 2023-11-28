@@ -50,6 +50,7 @@ public class OnNextTests
         WhenOnNextIsCalled();
 
         // Assert
+        ThenInformationWasLogged();
         ThenPostWasCaptured();
     }
 
@@ -108,5 +109,10 @@ public class OnNextTests
     private void ThenExceptionIsLogged()
     {
         _loggerWrapper.Received().LogError(_exception, "Could not process Post {Id}", _redditSharpPost.Id);
+    }
+
+    private void ThenInformationWasLogged()
+    {
+        _loggerWrapper.LogInfo("Saving Post {Id}", _redditSharpPost.Id);
     }
 }
