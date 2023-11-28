@@ -22,6 +22,8 @@ public static class ServicesRegistrar
 
         services.AddTransient(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
         services.AddSingleton<IDateTimeWrapper, DateTimeWrapper>();
+        services.AddSingleton<IConsoleWrapper, ConsoleWrapper>();
+
         services.AddSingleton<IMapper<Post, IRedditPost>, PostMapper>();
 
         return services;

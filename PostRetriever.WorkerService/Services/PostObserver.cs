@@ -1,23 +1,48 @@
-﻿using RedditSharp.Things;
+﻿using PostRetriever.WorkerService.Wrappers;
+using Reddit.Data.Contracts;
+using RedditSharp.Things;
 
 namespace PostRetriever.WorkerService.Services;
 
 public class PostObserver : IObserver<Post>
 {
-    private List<Post> _data = new();
+    private readonly DateTime _observationStartTime;
+    private readonly IMapper<Post, IRedditPost> _postMapper;
+    private readonly ILoggerWrapper<PostObserver> _logger;
+    private readonly IConsoleWrapper _consoleWrapper;
+
+    public PostObserver(IMapper<Post, IRedditPost> postMapper, ILoggerWrapper<PostObserver> logger, IDateTimeWrapper dateTimeWrapper, IConsoleWrapper consoleWrapper)
+    {
+        _postMapper = postMapper;
+        _logger = logger;
+        _consoleWrapper = consoleWrapper;
+        _observationStartTime = dateTimeWrapper.UtcNow;
+    }
 
     public void OnCompleted()
     {
-        _data.Clear();
+        _consoleWrapper.WriteLine("Completed Post Observations");
     }
 
-    public void OnError(Exception error)
+    public void OnError(Exception exception)
     {
-        Console.WriteLine(error.ToString());
+        _consoleWrapper.WriteLine(exception.ToString());
+        _logger.LogError(exception, "Could not process post.");
     }
 
-    public void OnNext(Post value)
+    public async void OnNext(Post value)
     {
-        _data.Add(value);
+        try
+        {
+            if (value.CreatedUTC < _observationStartTime)
+                return;
+
+            var redditPost = _postMapper.Map(value);
+            await redditPost.Save();
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "Could not process Post {Id}", value.Id);
+        }
     }
 }
