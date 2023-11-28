@@ -23,7 +23,13 @@ public class RedditDataProvider : IRedditDataProvider
     public async Task<OAuthTokenResponse?> GetAuthenticationToken()
     {
         var httpClient = _httpClientFactory.CreateClient();
-        var requestContent = new StringContent($"grant_type=password&username={_redditAuthConfig.UserName}&password={_redditAuthConfig.Password}", Encoding.UTF8, "application/x-www-form-urlencoded");
+        var requestContent = new FormUrlEncodedContent(new[]
+        {
+            new KeyValuePair<string, string>("grant_type", "password"),
+            new KeyValuePair<string, string>("username", _redditAuthConfig.UserName),
+            new KeyValuePair<string, string>("password", _redditAuthConfig.Password)
+        });
+        httpClient.DefaultRequestHeaders.Add("User-Agent", _redditAuthConfig.UserAgent);
 
         var authHeaderValue = Convert.ToBase64String(Encoding.UTF8.GetBytes($"{_redditAuthConfig.ClientId}:{_redditAuthConfig.ClientSecret}"));
         httpClient.DefaultRequestHeaders.Add("Authorization", $"Basic {authHeaderValue}");
