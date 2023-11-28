@@ -83,7 +83,7 @@ public class RedditServiceTests
     private void GivenAnHttpClient()
     {
         _httpClient = new HttpClient(_mockHttpMessageHandler);
-        _httpClientFactory.CreateClient(nameof(RedditServiceFacade)).Returns(_httpClient);
+        _httpClientFactory.CreateClient().Returns(_httpClient);
     }
 
     private void GivenResponseIsSuccessful()
@@ -113,7 +113,7 @@ public class RedditServiceTests
 
     private async Task WhenGetAuthenticationTokenIsCalled()
     {
-        var target = new RedditServiceFacade(_httpClientFactory, _redditAuthConfigOptions);
+        var target = new RedditDataProvider(_httpClientFactory, _redditAuthConfigOptions);
         _result = await target.GetAuthenticationToken();
     }
 

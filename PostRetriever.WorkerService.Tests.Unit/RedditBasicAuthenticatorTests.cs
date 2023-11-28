@@ -13,7 +13,7 @@ public class RedditBasicAuthenticatorTests
 {
     private readonly ICache<OAuthTokenResponse> _cache = Substitute.For<ICache<OAuthTokenResponse>>();
     private readonly OAuthTokenResponse? _authToken = OAuthTokenResponse.Success(new JObject());
-    private readonly IRedditServiceFacade _redditServiceFacade = Substitute.For<IRedditServiceFacade>();
+    private readonly IRedditDataProvider _redditDataProvider = Substitute.For<IRedditDataProvider>();
     private readonly IOptions<RedditAuthConfig> _configOptions = Options.Create(RedditAuthConfig);
     private static readonly RedditAuthConfig RedditAuthConfig = new Fixture().Create<RedditAuthConfig>();
     private OAuthTokenResponse? _result;
@@ -56,18 +56,18 @@ public class RedditBasicAuthenticatorTests
 
     private void GivenAnAuthenticationTokenIsRetrieved()
     {
-        _redditServiceFacade.GetAuthenticationToken().Returns(_authToken);
+        _redditDataProvider.GetAuthenticationToken().Returns(_authToken);
     }
 
     private async Task WhenGetAuthTokenIsCalled()
     { 
-        var target = new RedditBasicAuthenticator(_configOptions, _cache, _redditServiceFacade);
+        var target = new RedditBasicAuthenticator(_configOptions, _cache, _redditDataProvider);
         _result = await target.GetAuthToken();
     }
 
     private async Task WhenCreateCacheEntryIsCalled()
     { 
-        var target = new RedditBasicAuthenticator(_configOptions, _cache, _redditServiceFacade);
+        var target = new RedditBasicAuthenticator(_configOptions, _cache, _redditDataProvider);
         _result = await target.CreateCacheEntry(_cacheEntry);
     }
 

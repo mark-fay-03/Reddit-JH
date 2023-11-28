@@ -9,13 +9,13 @@ public static class ServicesRegistrar
     {
         services.Configure<RedditAuthConfig>(contextConfiguration.GetSection(nameof(RedditAuthConfig)));
 
-        services.AddSingleton<IRedditServiceFacade, RedditServiceFacade>();
+        services.AddSingleton<IRedditDataProvider, RedditDataProvider>();
 
         services.AddSingleton<IRedditAuthenticator, RedditBasicAuthenticator>();
         services.AddSingleton<ICache<OAuthTokenResponse>, OAuthTokenCache>();
         services.AddMemoryCache();
         services.AddSingleton<RedditRequestHandler>();
-        services.AddHttpClient<RedditServiceFacade>().AddHttpMessageHandler<RedditRequestHandler>();
+        services.AddHttpClient<RedditDataProvider>().AddHttpMessageHandler<RedditRequestHandler>();
 
         return services;
     }
