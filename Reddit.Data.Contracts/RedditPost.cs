@@ -11,13 +11,20 @@ public interface IRedditPost
 
 public class RedditPost : IRedditPost
 {
+    private readonly IRedditPosts _redditPosts;
+
+    public RedditPost(IRedditPosts redditPosts)
+    {
+        _redditPosts = redditPosts;
+    }
+
     public string Id { get; set; } = null!;
     public DateTime Created { get; set; }
     public string AuthorName { get; set; } = null!;
     public int UpVotes { get; set; }
 
-    public Task Save()
+    public async Task Save()
     {
-        throw new NotImplementedException();
+        await _redditPosts.Add(this);
     }
 }

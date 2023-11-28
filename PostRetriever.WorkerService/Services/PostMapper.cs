@@ -10,9 +10,16 @@ public interface IMapper<TRedditSharp, TData>
 
 public class PostMapper : IMapper<Post, IRedditPost>
 {
+    private readonly IRedditPosts _redditPosts;
+
+    public PostMapper(IRedditPosts redditPosts)
+    {
+        _redditPosts = redditPosts;
+    }
+
     public IRedditPost Map(Post input)
     {
-        var redditPost = new RedditPost();
+        var redditPost = new RedditPost(_redditPosts);
         
         redditPost.Id = input.Id;
         redditPost.Created = input.CreatedUTC;
