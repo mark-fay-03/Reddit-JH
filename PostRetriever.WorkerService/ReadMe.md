@@ -4,3 +4,5 @@ This service is used to collect data for the configured user and their subreddit
 ## Glossary
 ## Running
 ## Testing
+## Notes
+Reddit Sharp is deprecated, but is still recommended on the Reddit API wiki. We should investigate either maintaining the repo or extracting our own version.

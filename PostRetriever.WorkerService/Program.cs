@@ -5,7 +5,7 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         services.AddInternalServices(context.Configuration);
 
-        services.AddHostedService<Worker>();
+        services.AddHostedService<PostsProcessorService>();
     })
     .Build();
 
