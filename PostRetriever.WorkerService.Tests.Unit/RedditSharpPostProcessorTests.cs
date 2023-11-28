@@ -1,9 +1,7 @@
-﻿using System.Threading.Tasks;
-using NSubstitute;
+﻿using NSubstitute;
 using PostRetriever.WorkerService.Services;
 using PostRetriever.WorkerService.Wrappers;
 using RedditSharp.Things;
-using Xunit;
 
 namespace PostRetriever.WorkerService.Tests.Unit;
 

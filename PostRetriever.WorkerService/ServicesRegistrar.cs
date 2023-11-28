@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication.OAuth;
-using PostRetriever.WorkerService.Services;
+﻿using PostRetriever.WorkerService.Services;
 using PostRetriever.WorkerService.Wrappers;
 using Reddit.Data.Contracts;
 using RedditSharp;
