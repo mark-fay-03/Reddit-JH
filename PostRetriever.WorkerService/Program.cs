@@ -1,9 +1,10 @@
-using PostRetriever;
 using PostRetriever.WorkerService;
 
 IHost host = Host.CreateDefaultBuilder(args)
-    .ConfigureServices(services =>
+    .ConfigureServices((context, services) =>
     {
+        services.AddInternalServices(context.Configuration);
+
         services.AddHostedService<Worker>();
     })
     .Build();
