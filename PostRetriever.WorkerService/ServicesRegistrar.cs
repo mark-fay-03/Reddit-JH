@@ -20,6 +20,7 @@ public static class ServicesRegistrar
         services.AddSingleton<IObserver<Post>, PostObserver>();
 
         services.AddTransient(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
+        services.AddSingleton<IDateTimeWrapper, DateTimeWrapper>();
 
         return services;
     }

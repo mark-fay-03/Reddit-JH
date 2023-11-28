@@ -1,6 +1,6 @@
 ﻿namespace PostRetriever.WorkerService.Wrappers;
 
-internal interface ILoggerWrapper<T>
+public interface ILoggerWrapper<T>
 {
     void LogError(Exception exception, string? message, params object[]? args);
 }
