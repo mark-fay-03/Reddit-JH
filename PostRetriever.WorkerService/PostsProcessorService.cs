@@ -18,7 +18,7 @@ namespace PostRetriever.WorkerService
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            await _redditPostProcessor.StreamPosts("JH_MF_Temp", _postObserver, stoppingToken);
+            await _redditPostProcessor.StreamPosts("temp2", _postObserver, stoppingToken);
         }
     }
 }

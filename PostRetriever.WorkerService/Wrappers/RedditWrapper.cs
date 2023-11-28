@@ -9,11 +9,11 @@ public interface IRedditWrapper
 
 public class RedditWrapper : IRedditWrapper
 {
-    private readonly Reddit _redditApi;
+    private readonly RedditSharp.Reddit _redditApi;
 
     public RedditWrapper(IWebAgent webAgent, bool initUser)
     {
-        _redditApi = new Reddit(webAgent, initUser);
+        _redditApi = new RedditSharp.Reddit(webAgent, initUser);
     }
 
     public async Task<ISubRedditWrapper> GetSubRedditAsync(string name, bool validateName = true)

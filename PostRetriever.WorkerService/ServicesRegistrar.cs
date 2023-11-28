@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authentication.OAuth;
 using PostRetriever.WorkerService.Services;
 using PostRetriever.WorkerService.Wrappers;
+using Reddit.Data.Contracts;
 using RedditSharp;
 using RedditSharp.Things;
 
@@ -21,6 +22,7 @@ public static class ServicesRegistrar
 
         services.AddTransient(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
         services.AddSingleton<IDateTimeWrapper, DateTimeWrapper>();
+        services.AddSingleton<IMapper<Post, IRedditPost>, PostMapper>();
 
         return services;
     }
