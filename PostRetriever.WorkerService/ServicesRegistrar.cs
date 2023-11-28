@@ -11,6 +11,8 @@ public static class ServicesRegistrar
 
         services.AddSingleton<IRedditServiceFacade, RedditServiceFacade>();
 
+        services.AddSingleton<ICache<OAuthTokenResponse>, OAuthTokenCache>();
+        services.AddMemoryCache();
         return services;
     }
 }
