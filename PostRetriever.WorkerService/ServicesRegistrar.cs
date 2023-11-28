@@ -19,6 +19,8 @@ public static class ServicesRegistrar
         services.AddSingleton<IRedditPostProcessor, RedditSharpPostProcessor>();
         services.AddSingleton<IObserver<Post>, PostObserver>();
 
+        services.AddTransient(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
+
         return services;
     }
 
