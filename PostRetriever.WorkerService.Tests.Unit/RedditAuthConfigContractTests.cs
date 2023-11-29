@@ -14,6 +14,7 @@ namespace PostRetriever.WorkerService.Tests.Unit
             public string Password { get; set; } = null!;
             public string UserAgent { get; set; } = null!;
             public string RedirectUri { get; set; } = null!;
+            public string SubRedditName { get; set; } = null!;
             // ReSharper restore UnusedMember.Local
         }
 
