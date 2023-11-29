@@ -6,6 +6,8 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         services.AddInternalServices(context.Configuration);
         services.AddDataContractDependencies();
+        
+        services.AddLogging();
         services.AddHostedService<PostsProcessorService>();
     })
     .Build();

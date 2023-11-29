@@ -1,3 +1,7 @@
+using PostRetriever.WorkerService;
+using Reddit.Data.Contracts;
+using StatisticsAPI;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +10,13 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
+builder.Services.AddApiDependencies();
+builder.Services.AddInternalServices(builder.Configuration);
+builder.Services.AddDataContractDependencies();
+
+builder.Services.AddHostedService<PostsProcessorService>();
+builder.Services.AddLogging();
 
 var app = builder.Build();
 
