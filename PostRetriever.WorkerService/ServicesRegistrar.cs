@@ -1,4 +1,5 @@
-﻿using PostRetriever.WorkerService.Services;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+using PostRetriever.WorkerService.Services;
 using PostRetriever.WorkerService.Wrappers;
 using Reddit.Data.Contracts;
 using RedditSharp;
@@ -16,33 +17,33 @@ public static class ServicesRegistrar
 
         InitializeRedditSharp(services, redditAuthConfig);
 
-        services.AddSingleton<IRedditPostProcessor, RedditSharpPostProcessor>();
-        services.AddSingleton<IObserver<Post>, PostObserver>();
+        services.TryAddSingleton<IRedditPostProcessor, RedditSharpPostProcessor>();
+        services.TryAddSingleton<IObserver<Post>, PostObserver>();
 
-        services.AddTransient(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
-        services.AddSingleton<IDateTimeWrapper, DateTimeWrapper>();
-        services.AddSingleton<IConsoleWrapper, ConsoleWrapper>();
+        services.TryAddTransient(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
+        services.TryAddSingleton<IDateTimeWrapper, DateTimeWrapper>();
+        services.TryAddSingleton<IConsoleWrapper, ConsoleWrapper>();
 
-        services.AddSingleton<IMapper<Post, IRedditPost>, PostMapper>();
+        services.TryAddSingleton<IMapper<Post, IRedditPost>, PostMapper>();
 
         return services;
     }
 
     private static void InitializeRedditSharp(IServiceCollection services, RedditAuthConfig redditAuthConfig)
     {
-        services.AddSingleton<IWebAgent>(_ =>
+        services.TryAddSingleton<IWebAgent>(_ =>
             new BotWebAgent(
                 redditAuthConfig.UserName,
                 redditAuthConfig.Password,
                 redditAuthConfig.ClientId,
                 redditAuthConfig.ClientSecret,
                 redditAuthConfig.RedirectUri));
-        services.AddSingleton<IRedditWrapper>(provider => new RedditWrapper(provider.GetRequiredService<IWebAgent>(), false));
+        services.TryAddSingleton<IRedditWrapper>(provider => new RedditWrapper(provider.GetRequiredService<IWebAgent>(), false));
         var webAgentPool = new RefreshTokenWebAgentPool(redditAuthConfig.ClientId, redditAuthConfig.ClientSecret, redditAuthConfig.RedirectUri)
         {
             DefaultRateLimitMode = RateLimitMode.Burst,
             DefaultUserAgent = redditAuthConfig.UserAgent
         };
-        services.AddSingleton(webAgentPool);
+        services.TryAddSingleton(webAgentPool);
     }
 }

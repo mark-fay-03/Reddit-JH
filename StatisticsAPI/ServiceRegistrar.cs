@@ -1,6 +1,7 @@
-﻿using PostRetriever.WorkerService.Services;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
 using Reddit.Data.Contracts;
-using RedditSharp.Things;
+using StatisticsAPI.Mappers;
+using StatisticsAPI.Models;
 using StatisticsAPI.Services;
 
 namespace StatisticsAPI;
@@ -9,9 +10,10 @@ public static class ServiceRegistrar
 {
     public static IServiceCollection AddApiDependencies(this IServiceCollection services)
     {
-        services.AddScoped(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
-        services.AddSingleton<IPostsService, PostsService>();
-        services.AddSingleton<IMapper<Post, IRedditPost>, PostMapper>();
+        services.TryAddScoped(typeof(ILoggerWrapper<>), typeof(LoggerWrapper<>));
+        services.TryAddSingleton<IPostsService, PostsService>();
+        services.TryAddSingleton<IUsersService, UsersService>();
+        services.TryAddSingleton<IMapper<Post, IRedditPost>, PostMapper>();
 
         return services;
     }
