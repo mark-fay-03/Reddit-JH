@@ -5,6 +5,7 @@ namespace Reddit.Data.Contracts;
 public interface IRedditPosts
 {
     Task Add(IRedditPost redditPost);
+    IEnumerable<IRedditPost> Get();
 }
 
 public class RedditPosts : IRedditPosts
@@ -15,5 +16,10 @@ public class RedditPosts : IRedditPosts
     {
         _posts.Add(redditPost);
         return Task.CompletedTask;
+    }
+
+    public IEnumerable<IRedditPost> Get()
+    {
+        return _posts.Select(p => p);
     }
 }

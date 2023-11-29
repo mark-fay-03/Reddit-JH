@@ -4,9 +4,9 @@ using AutoFixture;
 using FluentAssertions;
 using Reddit.Data.Contracts;
 
-namespace Reddit.Data.InMemory.Tests.Unit
+namespace Reddit.Data.InMemory.Tests.Unit.RedditPostsTests
 {
-    public class RedditPostsTests
+    public class AddTests
     {
         private static readonly Fixture Fixture = new();
 
@@ -16,7 +16,7 @@ namespace Reddit.Data.InMemory.Tests.Unit
 
         [Fact]
         [Trait("Category", "UnitTest")]
-        public async Task Add_ShouldAddPostToCollection()
+        public async Task ShouldAddPostToCollection()
         {
             // Arrange
             GivenAPost();
@@ -37,8 +37,7 @@ namespace Reddit.Data.InMemory.Tests.Unit
         {
             await _redditPosts.Add(_redditPost);
         }
-
-
+        
         private void ThenPostWasAddedToCollection()
         {
             var backingPostsField = typeof(RedditPosts).GetField("_posts", BindingFlags.GetField | BindingFlags.NonPublic | BindingFlags.Instance);
